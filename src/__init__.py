@@ -28,7 +28,7 @@ def create_app(test_config=None):
 
     @app.get("/")
     def index():
-        return "<div style=\"background-color: cornsilk; color: navy; display: flex; flex-direction: column; font-size: 30px;justify-content: center; align-items: center; height: 100vh;\"><h1>Hello, This Is Faddah's World!</h1><h2>'N Yr Jez Livin' Innit.</h2><h3>Version 1.0.0</h3></div>"
+        return "<div style=\"background-color: cornsilk; color: navy; display: flex; flex-direction: column; font-size: 30px;justify-content: center; align-items: center; height: 100vh;\"><h1>Hello, This Is Faddah's World!</h1><h2>'N' Yr Jez Livin' Innit.</h2><h3>Version 1.0.0</h3></div>"
 
     @app.get("/hello")
     def say_hello():
