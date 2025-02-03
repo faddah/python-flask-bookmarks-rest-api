@@ -1,8 +1,14 @@
 import os
 from flask import Flask
+import pkg_resources
 from src.auth import auth
 from src.bookmarks import bookmarks
 from src.database import db
+
+
+def list_installed_packages():
+    installed_packages = pkg_resources.working_set
+    return sorted([f"{i.key}=={i.version}" for i in installed_packages])
 
 
 def create_app(test_config=None):
@@ -33,5 +39,10 @@ def create_app(test_config=None):
     @app.get("/hello")
     def say_hello():
         return {"message": "Hello This Is Faddah's World!"}
+
+    @app.get("/packages")  # New route to list packages
+    def list_packages():
+        packages = list_installed_packages()
+        return {"packages": packages}
 
     return app
