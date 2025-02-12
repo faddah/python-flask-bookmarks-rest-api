@@ -1,13 +1,13 @@
 import os
 from flask import Flask
-import pkg_resources
+import importlib.metadata
 from src.auth import auth
 from src.bookmarks import bookmarks
 from src.database import db
 
 
 def list_installed_packages():
-    installed_packages = pkg_resources.working_set
+    installed_packages = importlib.metadata.distributions()
     return sorted([f"{i.key}=={i.version}" for i in installed_packages])
 
 
