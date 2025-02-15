@@ -1,5 +1,6 @@
 import os
 import importlib.metadata
+from flask import Flask
 from src.auth import auth
 from src.bookmarks import bookmarks
 from src.database import db
