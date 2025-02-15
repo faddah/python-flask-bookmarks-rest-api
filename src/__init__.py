@@ -8,7 +8,7 @@ from src.database import db
 
 def list_installed_packages():
     installed_packages = importlib.metadata.distributions()
-    return sorted([f"{i.key}=={i.version}" for i in installed_packages])
+    return sorted([f"{i.metadata['Name']}=={i.version}" for i in installed_packages])
 
 
 def create_app(test_config=None):
