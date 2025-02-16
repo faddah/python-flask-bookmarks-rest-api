@@ -28,6 +28,8 @@ def create_app(test_config=None):
     db.app = app
     db.init_app(app)
 
+    JWTManager(app)
+
     # Add this block to create the database tables
     with app.app_context():
         db.create_all()
