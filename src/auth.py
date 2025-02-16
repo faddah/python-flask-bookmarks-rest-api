@@ -1,6 +1,10 @@
 import validators  # type: ignore
 from flask import Blueprint, jsonify, request  # type: ignore
-from werkzeug.security import generate_password_hash  # type: ignore
+from flask_jwt_extended import create_access_token, create_refresh_token
+from werkzeug.security import (
+    check_password_hash,
+    generate_password_hash,  # type: ignore
+)
 
 from src.constants.http_status_codes import (
     HTTP_201_CREATED,
