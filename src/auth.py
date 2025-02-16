@@ -7,6 +7,7 @@ from werkzeug.security import (
 )
 
 from src.constants.http_status_codes import (
+    HTTP_200_OK,
     HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST,
     HTTP_409_CONFLICT,
