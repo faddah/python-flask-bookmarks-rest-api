@@ -87,7 +87,7 @@ def login():
                     "user": {
                         "refresh": refresh,
                         "access": access,
-                        "username": user.username,
+                        "username": str(user.username),
                         "email": user.email,
                     }
                 }
