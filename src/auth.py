@@ -63,6 +63,35 @@ def register():
     ), HTTP_201_CREATED
 
 
+@auth.post("/login")
+def login():
+    email = request.json.get("email", "")
+    password = request.json.get("password", "")
+
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        is_pass_correct = check_password_hash(user.password, password)
+
+        if is_pass_correct:
+            refresh = create_refresh_token(identity=user.id)
+            access = create_access_token(identity=user.id)
+
+            return jsonify(
+                {
+                    "user": {
+                        "refresh": refresh,
+                        "access": access,
+                        "username": user.username,
+                        "email": user.email,
+                    }
+                }
+            ), HTTP_200_OK
+    return jsonify(
+        {"error": "Wrong email or password credentials."}
+    ), HTTP_400_BAD_REQUEST
+
+
 @auth.get("/me")
 def me():
     return {"user": "me"}
