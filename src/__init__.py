@@ -43,7 +43,11 @@ def create_app(test_config=None):
 
     @app.get("/hello")
     def say_hello():
-        return {"message": "Hello This Is Faddah's World!"}
+        return {
+            "message": "Hello — This Is Faddah's World!",
+            "sub-message": "'N' Yr Jez Livin' Innit.",
+            "version": "0.0.1",
+        }
 
     @app.get("/packages")  # New route to list packages
     def list_packages():
