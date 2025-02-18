@@ -95,7 +95,7 @@ def login():
             ), HTTP_200_OK
     return jsonify(
         {"error": "Wrong email or password credentials."}
-    ), HTTP_400_BAD_REQUEST
+    ), HTTP_401_UNAUTHORIZED
 
 
 @auth.get("/me")
