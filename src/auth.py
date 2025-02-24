@@ -15,6 +15,7 @@ from src.constants.http_status_codes import (
     HTTP_200_OK,
     HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST,
+    HTTP_401_UNAUTHORIZED,
     HTTP_409_CONFLICT,
 )
 from src.database import User, db
@@ -79,22 +80,22 @@ def login():
         is_pass_correct = check_password_hash(user.password, password)
 
         if is_pass_correct:
-            refresh = create_refresh_token(identity=user.id)
-            access = create_access_token(identity=user.id)
+            refresh = create_refresh_token(identity=str(user.id))
+            access = create_access_token(identity=str(user.id))
 
             return jsonify(
                 {
                     "user": {
                         "refresh": refresh,
                         "access": access,
-                        "username": str(user.username),
+                        "username": user.username,
                         "email": user.email,
                     }
                 }
             ), HTTP_200_OK
     return jsonify(
         {"error": "Wrong email or password credentials."}
-    ), HTTP_400_BAD_REQUEST
+    ), HTTP_401_UNAUTHORIZED
 
 
 @auth.get("/me")
@@ -103,3 +104,11 @@ def me():
     user_id = get_jwt_identity()
     user = User.query.filter_by(id=user_id).first()
     return jsonify({"username": user.username, "email": user.email}), HTTP_200_OK
+
+
+@auth.post("/token/refresh")
+@jwt_required(refresh=True)
+def refresh_users_token():
+    identity = get_jwt_identity()
+    access = create_access_token(identity=str(identity))
+    return jsonify({"access": access}), HTTP_200_OK
