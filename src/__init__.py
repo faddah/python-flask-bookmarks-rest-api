@@ -1,18 +1,21 @@
+"""Flask application factory and configuration."""
 import os
 import importlib.metadata
-from flask import Flask
-from flask_jwt_extended import JWTManager
+from flask import Flask  # pylint: disable=no-name-in-module
+from flask_jwt_extended import JWTManager  # pylint: disable=no-name-in-module
 from src.auth import auth
 from src.bookmarks import bookmarks
 from src.database import db
 
 
 def list_installed_packages():
+    """Return sorted list of installed Python packages with versions."""
     installed_packages = importlib.metadata.distributions()
     return sorted([f"{i.metadata['Name']}=={i.version}" for i in installed_packages])
 
 
 def create_app(test_config=None):
+    """Create and configure Flask application instance."""
     app = Flask(__name__, instance_relative_config=True)
 
     if test_config is None:
@@ -39,18 +42,35 @@ def create_app(test_config=None):
 
     @app.get("/")
     def index():
-        return "<div style=\"background-color: cornsilk; color: navy; display: flex; flex-direction: column; font-size: 30px;justify-content: center; align-items: center; height: 100vh;\"><h1>Hello, This Is Faddah's World!</h1><h2>'N' Yr Jez Livin' Innit.</h2><h3>Version 1.0.0</h3></div>"
+        """Render home page."""
+        return (
+            "<div style=\""
+            "background-color: cornsilk; "
+            "color: navy; "
+            "display: flex; "
+            "flex-direction: column; "
+            "font-size: 30px; "
+            "justify-content: center; "
+            "align-items: center; "
+            "height: 100vh;\">" 
+            "<h1>Hello, This Is Faddah's World!</h1>"
+            "<h2>'N' Yr Jez Livin' Innit.</h2>"
+            "<h3>Version 1.0.0</h3>"
+            "</div>"
+        )
 
     @app.get("/hello")
     def say_hello():
+        """Return hello message JSON."""
         return {
             "message": "Hello — This Is Faddah's World!",
             "sub-message": "'N' Yr Jez Livin' Innit.",
             "version": "0.0.1",
         }
 
-    @app.get("/packages")  # New route to list packages
+    @app.get("/packages")
     def list_packages():
+        """Return list of installed packages."""
         packages = list_installed_packages()
         return {"packages": packages}
 

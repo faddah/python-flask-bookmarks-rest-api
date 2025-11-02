@@ -1,3 +1,4 @@
+"""Authentication routes and user management."""
 import validators  # type: ignore
 from flask import Blueprint, jsonify, request  # type: ignore
 from flask_jwt_extended import (
@@ -25,6 +26,8 @@ auth = Blueprint("auth", __name__, url_prefix="/api/v1/auth")
 
 @auth.post("/register")
 def register():
+    """Register a new user with username, email, and password."""
+    # return "User created & registered successfully.", HTTP_201_CREATED
     username = request.json.get("username")
     email = request.json.get("email")
     password = request.json.get("password")
@@ -52,10 +55,10 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "Email is already in use."}), HTTP_409_CONFLICT
 
-    if User.query.filter_by(username=username).first():
+    if User.query.filter_by(username=username).first() is not None:
         return jsonify({"error": "User Name is already in use."}), HTTP_409_CONFLICT
 
-    pwd_hash = generate_password_hash(password)
+    pwd_hash = generate_password_hash(password, method='pbkdf2:sha256')
 
     user = User(username=username, password=pwd_hash, email=email)
     db.session.add(user)
@@ -63,7 +66,7 @@ def register():
 
     return jsonify(
         {
-            "message": "User created & registered.",
+            "message": "User created & registered successfully.",
             "user": {"username": username, "email": email},
         }
     ), HTTP_201_CREATED
@@ -71,6 +74,7 @@ def register():
 
 @auth.post("/login")
 def login():
+    """Authenticate user and return access and refresh tokens."""
     email = request.json.get("email", "")
     password = request.json.get("password", "")
 
@@ -101,6 +105,7 @@ def login():
 @auth.get("/me")
 @jwt_required()
 def me():
+    """Get current authenticated user information."""
     user_id = get_jwt_identity()
     user = User.query.filter_by(id=user_id).first()
     return jsonify({"username": user.username, "email": user.email}), HTTP_200_OK
@@ -109,6 +114,7 @@ def me():
 @auth.post("/token/refresh")
 @jwt_required(refresh=True)
 def refresh_users_token():
+    """Refresh access token using refresh token."""
     identity = get_jwt_identity()
     access = create_access_token(identity=str(identity))
     return jsonify({"access": access}), HTTP_200_OK

@@ -1,6 +1,9 @@
 .DS_Store
+*.code-workspace
+python_flask_bookmarks_rest_api.code-workspace
 __pycache__
 __pycache__/*
 .vscode
+.venv/**
 .env
 .flaskenv
