@@ -16,7 +16,7 @@ def list_installed_packages():
 
 def create_app(test_config=None):
     """Create and configure Flask application instance."""
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_folder='static')
 
     if test_config is None:
         app.config.from_mapping(
@@ -73,5 +73,10 @@ def create_app(test_config=None):
         """Return list of installed packages."""
         packages = list_installed_packages()
         return {"packages": packages}
+
+    @app.route('/favicon.ico')
+    def favicon():
+        """Serve the favicon."""
+        return app.send_static_file('favicon.ico')
 
     return app
