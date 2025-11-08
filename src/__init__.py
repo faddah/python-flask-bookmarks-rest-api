@@ -44,6 +44,11 @@ def create_app(test_config=None):
     def index():
         """Render home page."""
         return (
+            "<!DOCTYPE html>"
+            "<html><head>"
+            "<title>Faddah's World</title>"
+            "<link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\">"
+            "</head><body>"
             "<div style=\""
             "background-color: cornsilk; "
             "color: navy; "
@@ -57,6 +62,7 @@ def create_app(test_config=None):
             "<h2>'N' Yr Jez Livin' Innit.</h2>"
             "<h3>Version 1.0.0</h3>"
             "</div>"
+            "</body></html>"
         )
 
     @app.get("/hello")
