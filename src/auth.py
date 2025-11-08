@@ -1,5 +1,6 @@
 """Authentication routes and user management."""
-import validators  # type: ignore
+import validators
+# type: ignore
 from flask import Blueprint, jsonify, request  # type: ignore
 from flask_jwt_extended import (
     jwt_required,
