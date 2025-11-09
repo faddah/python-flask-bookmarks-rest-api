@@ -1,3 +1,10 @@
-"requestAuthentication": {
-    "method": "default"
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "requestAuthentication": {
+                "method": "default"
+            }
+        }
+    ]
 }
