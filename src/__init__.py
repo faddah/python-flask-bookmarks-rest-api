@@ -60,7 +60,7 @@ def create_app(test_config=None):
             "height: 100vh;\">" 
             "<h1>Hello, This Is Faddah's World!</h1>"
             "<h2>'N' Yr Jez Livin' Innit.</h2>"
-            "<h3>Version 1.0.0</h3>"
+            "<h3>Version 0.0.1</h3>"
             "</div>"
             "</body></html>"
         )
