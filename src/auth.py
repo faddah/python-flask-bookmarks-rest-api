@@ -109,7 +109,10 @@ def me():
     """Get current authenticated user information."""
     user_id = get_jwt_identity()
     user = User.query.filter_by(id=user_id).first()
-    return jsonify({"username": user.username, "email": user.email}), HTTP_200_OK
+    return jsonify({
+        "username": user.username,
+        "email": user.email
+    }), HTTP_200_OK
 
 
 @auth.post("/token/refresh")
