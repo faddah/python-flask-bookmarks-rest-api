@@ -1,3 +1,4 @@
+"""HTTP status code constants and helper functions."""
 HTTP_200_OK = 200
 HTTP_201_CREATED = 201
 HTTP_202_ACCEPTED = 202
@@ -58,25 +59,25 @@ HTTP_511_NETWORK_AUTHENTICATION_REQUIRED = 511
 
 
 def is_informational(status):
-    # 1xx
-    pass
+    """Check if status code is informational (1xx)."""
+    return 100 <= status < 200
 
 
 def is_success(status):
-    # 2xx
-    pass
+    """Check if status code is success (2xx)."""
+    return 200 <= status < 300
 
 
 def is_redirect(status):
-    # 3xx
-    pass
+    """Check if status code is redirect (3xx)."""
+    return 300 <= status < 400
 
 
-def is_client_error():
-    # 4xx
-    pass
+def is_client_error(status):
+    """Check if status code is client error (4xx)."""
+    return 400 <= status < 500
 
 
-def is_server_error():
-    # 5xx
-    pass
+def is_server_error(status):
+    """Check if status code is server error (5xx)."""
+    return 500 <= status < 600
