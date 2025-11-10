@@ -71,7 +71,7 @@ def handle_bookmarks():
 
         data = []
 
-        for bookmark in listed_bookmarks:
+        for bookmark in listed_bookmarks.items:
             data.append({
                 'id': bookmark.id,
                 'url': bookmark.url,
