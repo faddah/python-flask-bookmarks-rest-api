@@ -66,8 +66,9 @@ def handle_bookmarks():
         }), HTTP_201_CREATED
 
     else:
-
-        listed_bookmarks = Bookmark.query.filter_by(user_id=current_user).all()
+        listed_bookmarks = Bookmark.query.filter_by(
+            user_id=current_user
+        ).paginate(page=page, per_page=per_page)
 
         data = []
 
