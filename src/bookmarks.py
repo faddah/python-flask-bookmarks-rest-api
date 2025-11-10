@@ -22,16 +22,16 @@ from src.database import (
 )
 # type: ignore
 
-
-
 bookmarks = Blueprint("bookmarks", __name__, url_prefix="/api/v1/bookmarks")
-
 
 @bookmarks.route("/", methods=["POST", "GET"])
 @jwt_required()
 def handle_bookmarks():
     """Get all bookmarks for the current user."""
     current_user = get_jwt_identity()
+
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 5, type=int)
 
     if request.method == "POST":
         body = request.get_json().get('body', '')
