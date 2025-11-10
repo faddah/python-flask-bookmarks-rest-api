@@ -1,6 +1,5 @@
 """Unit tests for the add_numbers function."""
 import unittest
-# TODO: Ask Amazon Q to write unit tests.
 
 def add_numbers(a, b):
     """
