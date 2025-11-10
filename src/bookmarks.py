@@ -82,7 +82,18 @@ def handle_bookmarks():
                 'updated_at': bookmark.updated_at
         })
 
-    return jsonify({"data": data}), HTTP_200_OK
+        meta = {
+            "page": listed_bookmarks.page,
+            "pages": listed_bookmarks.pages,
+            "total_count": listed_bookmarks.total,
+            "per_page": listed_bookmarks.per_page,
+            "prev_page": listed_bookmarks.prev_num,
+            "next_page": listed_bookmarks.next_num,
+            "has_prev": listed_bookmarks.has_prev,
+            "has_next": listed_bookmarks.has_next
+        }
+
+    return jsonify({"data": data, "meta": meta}), HTTP_200_OK
 
 
 @bookmarks.route("/ping", methods=["GET"])
