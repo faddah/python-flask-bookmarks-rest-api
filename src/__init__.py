@@ -86,4 +86,9 @@ def create_app(test_config=None):
         """Serve the favicon."""
         return app.send_static_file('favicon.ico')
 
+    @app.route('/.well-known/appspecific/com.chrome.devtools.json')
+    def chrome_devtools():
+        """Return empty response for Chrome DevTools request."""
+        return {}, 204
+
     return app
