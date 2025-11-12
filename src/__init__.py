@@ -1,6 +1,5 @@
 """Flask application factory and configuration."""
 import os
-import logging
 import importlib.metadata
 from flask import Flask  # pylint: disable=no-name-in-module
 from flask_jwt_extended import JWTManager  # pylint: disable=no-name-in-module
