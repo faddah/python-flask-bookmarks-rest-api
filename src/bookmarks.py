@@ -99,11 +99,11 @@ def handle_bookmarks():
 
 @bookmarks.get("/<int:id>")
 @jwt_required()
-def get_bookmark(id):
+def get_bookmark(bookmark_id):
     """Get a specific bookmark by ID for the current user."""
     current_user = get_jwt_identity()
     bookmark = Bookmark.query.filter_by(
-        id=id,
+        id=bookmark_id,
         user_id=current_user
     ).first()
 
