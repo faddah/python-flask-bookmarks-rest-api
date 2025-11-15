@@ -97,7 +97,7 @@ def handle_bookmarks():
 
     return jsonify({"data": data, "meta": meta}), HTTP_200_OK
 
-@bookmarks.get("/<int:id>")
+@bookmarks.get("/<int:bookmark_id>")
 @jwt_required()
 def get_bookmark(bookmark_id):
     """Get a specific bookmark by ID for the current user."""
