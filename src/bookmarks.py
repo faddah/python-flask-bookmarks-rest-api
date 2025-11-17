@@ -123,6 +123,45 @@ def get_bookmark(bookmark_id):
     }), HTTP_200_OK
 
 
+@bookmarks.put("/<int:bookmark_id>")
+@bookmarks.patch("/<int:bookmark_id>")
+@jwt_required()
+def edit_bookmark(bookmark_id):
+    """Edit a specific bookmark by ID for the current user."""
+    current_user = get_jwt_identity()
+    bookmark = Bookmark.query.filter_by(
+        id=bookmark_id,
+        user_id=current_user
+    ).first()
+
+    if not bookmark:
+        return jsonify({
+            "error": "Bookmark not found."
+        }), HTTP_404_NOT_FOUND
+
+    body = request.get_json().get('body', '')
+    url = request.get_json().get('url', '')
+
+    if not validators.url(url):
+        return jsonify({
+            "error": "Not a valid URL, please enter a valid URL."
+        }), HTTP_400_BAD_REQUEST
+
+    bookmark.body = body
+    bookmark.url = url
+
+    db.session.commit()
+
+    return jsonify ({
+        'id': bookmark.id,
+        'url': bookmark.url,
+        'short_url': bookmark.short_url,
+        'visits': bookmark.visits,
+        'body': bookmark.body,
+        'created_at': bookmark.created_at,
+        'updated_at': bookmark.updated_at
+    }), HTTP_200_OK
+
 @bookmarks.route("/ping", methods=["GET"])
 def ping():
     """Ping route to check if bookmarks blueprint is working."""
