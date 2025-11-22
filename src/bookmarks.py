@@ -178,10 +178,11 @@ def delete_bookmark(bookmark_id):
             "error": "Bookmark not found."
         }), HTTP_404_NOT_FOUND
 
+    bookmark_id_deleted = bookmark.id
     db.session.delete(bookmark)
     db.session.commit()
 
-    return jsonify({}), HTTP_204_NO_CONTENT
+    return jsonify({"message": "Bookmark " + str(bookmark_id_deleted) + " deleted successfully."}), HTTP_204_NO_CONTENT
 
 @bookmarks.route("/ping", methods=["GET"])
 def ping():
