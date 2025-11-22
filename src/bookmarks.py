@@ -13,6 +13,7 @@ from flask_jwt_extended import (
 from src.constants.http_status_codes import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
     HTTP_409_CONFLICT
@@ -161,6 +162,26 @@ def edit_bookmark(bookmark_id):
         'created_at': bookmark.created_at,
         'updated_at': bookmark.updated_at
     }), HTTP_200_OK
+    
+@bookmarks.delete("/<int:bookmark_id>")
+@jwt_required()
+def delete_bookmark(bookmark_id):
+    """Delete a specific bookmark by ID for the current user."""
+    current_user = get_jwt_identity()
+    bookmark = Bookmark.query.filter_by(
+        id=bookmark_id,
+        user_id=current_user
+    ).first()
+
+    if not bookmark:
+        return jsonify({
+            "error": "Bookmark not found."
+        }), HTTP_404_NOT_FOUND
+
+    db.session.delete(bookmark)
+    db.session.commit()
+
+    return jsonify({}), HTTP_204_NO_CONTENT
 
 @bookmarks.route("/ping", methods=["GET"])
 def ping():
