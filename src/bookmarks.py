@@ -162,7 +162,7 @@ def edit_bookmark(bookmark_id):
         'created_at': bookmark.created_at,
         'updated_at': bookmark.updated_at
     }), HTTP_200_OK
-    
+
 @bookmarks.delete("/<int:bookmark_id>")
 @jwt_required()
 def delete_bookmark(bookmark_id):
