@@ -182,7 +182,9 @@ def delete_bookmark(bookmark_id):
     db.session.delete(bookmark)
     db.session.commit()
 
-    return jsonify({"message": "Bookmark " + str(bookmark_id_deleted) + " deleted successfully."}), HTTP_204_NO_CONTENT
+    return jsonify(
+        {"message": "Bookmark " + str(bookmark_id_deleted) + " deleted successfully."}
+    ), HTTP_204_NO_CONTENT
 
 @bookmarks.route("/ping", methods=["GET"])
 def ping():
