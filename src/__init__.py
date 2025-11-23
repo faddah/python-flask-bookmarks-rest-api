@@ -6,7 +6,7 @@ from flask_jwt_extended import JWTManager  # pylint: disable=no-name-in-module
 from src.auth import auth
 from src.bookmarks import bookmarks
 from src.database import db, Bookmark
-from src.constants.http_status_codes import (HTTP_404_NOT_FOUND)
+from src.constants.http_status_codes import (HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 def list_installed_packages():
@@ -103,10 +103,14 @@ def create_app(test_config=None):
         else:
             return jsonify({"error": "Short URL not found."}), HTTP_404_NOT_FOUND
 
-
     @app.errorhandler(HTTP_404_NOT_FOUND)
     def handle_404(e):
         """Handle 404 Not Found error."""
         return jsonify({"error": str(e)}), HTTP_404_NOT_FOUND
+
+    @app.errorhandler(HTTP_500_INTERNAL_SERVER_ERROR)
+    def handle_500(e):
+        """Handle 500 Not Found error."""
+        return jsonify({"error": str(e)}), HTTP_500_INTERNAL_SERVER_ERROR
 
     return app
