@@ -103,4 +103,10 @@ def create_app(test_config=None):
         else:
             return jsonify({"error": "Short URL not found."}), HTTP_404_NOT_FOUND
 
+
+    @app.errorhandler(HTTP_404_NOT_FOUND)
+    def handle_404(e):
+        """Handle 404 Not Found error."""
+        return jsonify({"error": str(e)}), HTTP_404_NOT_FOUND
+
     return app
