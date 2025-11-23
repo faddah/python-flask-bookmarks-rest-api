@@ -186,6 +186,27 @@ def delete_bookmark(bookmark_id):
         {"message": "Bookmark " + str(bookmark_id_deleted) + " deleted successfully."}
     ), HTTP_204_NO_CONTENT
 
+@bookmarks.get('/stats')
+@jwt_required()
+def get_stats():
+    """Get statistics for the current user."""
+    current_user = get_jwt_identity()
+
+    data = []
+
+    items = Bookmark.query.filter_by(user_id=current_user).all()
+
+    for item in items:
+        new_link = {
+            'visits': item.visits,
+            'url': item.url,
+            'short_url': item.short_url,
+            'id': item.id
+        }
+        data.append(new_link)
+
+    return jsonify({'data': data}), HTTP_200_OK
+
 @bookmarks.route("/ping", methods=["GET"])
 def ping():
     """Ping route to check if bookmarks blueprint is working."""
