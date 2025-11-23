@@ -1,11 +1,12 @@
 """Flask application factory and configuration."""
 import os
 import importlib.metadata
-from flask import Flask  # pylint: disable=no-name-in-module
+from flask import Flask, redirect, jsonify  # pylint: disable=no-name-in-module
 from flask_jwt_extended import JWTManager  # pylint: disable=no-name-in-module
 from src.auth import auth
 from src.bookmarks import bookmarks
-from src.database import db
+from src.database import db, Bookmark
+from src.constants.http_status_codes import (HTTP_404_NOT_FOUND)
 
 
 def list_installed_packages():
@@ -89,5 +90,17 @@ def create_app(test_config=None):
     def chrome_devtools():
         """Return empty response for Chrome DevTools request."""
         return {}, 204
+
+    @app.get('/<short_url>')
+    def redirect_to_url(short_url):
+        """Redirect to the original URL based on the short URL code."""
+        bookmark = Bookmark.query.filter_by(short_url=short_url).first_or_404()
+
+        if bookmark:
+            bookmark.visits += 1
+            db.session.commit()
+            return redirect(bookmark.url)
+        else:
+            return jsonify({"error": "Short URL not found."}), HTTP_404_NOT_FOUND
 
     return app
