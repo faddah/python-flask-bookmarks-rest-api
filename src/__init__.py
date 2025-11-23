@@ -110,7 +110,7 @@ def create_app(test_config=None):
 
     @app.errorhandler(HTTP_500_INTERNAL_SERVER_ERROR)
     def handle_500(e):
-        """Handle 500 Not Found error."""
+        """Handle 500 Internal Server error."""
         return jsonify({"error": str(e)}), HTTP_500_INTERNAL_SERVER_ERROR
 
     return app
