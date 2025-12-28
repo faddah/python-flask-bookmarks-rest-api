@@ -29,9 +29,9 @@ def brew_matcha():
     """Function that simulates brewing matcha."""
     print("Brewing matcha...")
     time.sleep(2)  # Simulate time taken to brew matcha
-    print("Matcha is ready!")
-    return f"Please drink your Matcha by {datetime.now() + timedelta(minutes=30)}."
+    print("Your Matcha is ready!")
+    return print(f"Please drink your Matcha by {datetime.now() + timedelta(minutes=30)}.")
 
 brew_tea("Oolong", 1.25)
 brew_tea(tea_type="Green", steep_time=1)
-print(brew_matcha())
+brew_matcha()
