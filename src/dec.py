@@ -11,7 +11,8 @@ def timer_dec(base_fn):
         start_time = time.time()
         result = base_fn(*args, **kwargs)
         end_time = time.time()
-        print(f"Function '{base_fn.__name__}' executed in {end_time - start_time:.9f} seconds")
+        time.sleep(0.5)
+        print(f"Your Function to '{base_fn.__name__}' brewed in {end_time - start_time:.9f} seconds")
         return result
 
     return enhanced_fn
